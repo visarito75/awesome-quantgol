@@ -1,0 +1,19 @@
+name: Revisar enlaces
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 12 * * 1"   # cada lunes
+  workflow_dispatch:
+
+jobs:
+  enlaces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Comprobar los enlaces del README
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --accept 200,206,403,429 README.md CONTRIBUTING.md
+          fail: true
